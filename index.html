@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Outquote</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+  <script src="https://use.typekit.net/psa2uuo.js"></script>
+  <script>try{Typekit.load({ async: false });renderContent();}catch(e){}</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="row">
+      <h2>Outquote</h2>
+      <p>A simple text card creator.</p>
+    </div>
+    <canvas id="canvas">
+      Your browser does not support the canvas element. Please use a modern browser.
+    </canvas>
+  </div>
+
+  <div class="container">
+    <p>
+      The text card will render as you type. Click "save" to download a <code>.png</code> of the canvas.
+    </p>
+    <h4>Content</h4>
+    <textarea class="u-full-width" type="text" id="quoteBox" placeholder="Quote Text" value=""></textarea>
+    <div class="row">
+      <div class="six columns">
+        <input class="u-full-width" type="text" id="quoteAttr" placeholder="Quote Attribution" value="">
+      </div>
+      <div class="six columns">
+        <input class="u-full-width" type="text" id="quoteTitle" placeholder="Atribution Subtext" value="">
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <h4>Options</h4>
+      </div>
+    </div>
+    <div class="row">
+      <div class="four columns">
+        <h5>Formatting</h5>
+        <input type="checkbox" id="centerElements">Center text</input>
+      </div>
+      <div class="four columns">
+        <h5>Style</h5>
+        <select class="u-full-width publication" id="publicationSelect">
+          <option value="dp">The Daily Pennsylvanian</option>
+          <option value="street">34th Street</option>
+          <option value="utb">Under the Button</option>
+        </select>
+        <input type="checkbox" id="inverseColors">Use inverse colors<br>
+        <input type="checkbox" id="useWordmark">Use DP wordmark<br>
+        <input type="checkbox" id="useSports">Use sports logo
+      </div>
+      <div class="four columns">
+        <h5>Elements</h5>
+        <input type="checkbox" id="toggleAttribution" checked>Include attribution<br>
+        <input type="checkbox" id="toggleLogo" checked>Include logo<br>
+        <input type="checkbox" id="togglePicture">Include photo (must be square)<br>
+        <button class="u-full-width button-secondary" type="button" id="uploadPicture">Upload photo &#8593;</button>
+        <input type="file" accept=".png,.jpg,.jpeg" id="fileInput" hidden>
+      </div>
+    </div>
+    <div class="row">
+      <div class="twelve columns">
+        <button class="u-full-width button-primary" type="button" id="saveButton">Save &#8595;</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
