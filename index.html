@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Outquote</title>
+  <title>Outscore</title>
   <meta http-equiv="content-type" content="text/html; charset=UTF8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -15,8 +15,8 @@
 <body>
   <div class="container">
     <div class="row">
-      <h2>Outquote</h2>
-      <p>A simple text card creator.</p>
+      <h2>Outscore</h2>
+      <p>A simple text card creator for March Madness.</p>
     </div>
     <canvas id="canvas">
       Your browser does not support the canvas element. Please use a modern browser.
@@ -28,13 +28,13 @@
       The text card will render as you type. Click "save" to download a <code>.png</code> of the canvas.
     </p>
     <h4>Content</h4>
-    <textarea class="u-full-width" type="text" id="quoteBox" placeholder="Quote Text" value=""></textarea>
     <div class="row">
       <div class="six columns">
-        <input class="u-full-width" type="text" id="quoteAttr" placeholder="Quote Attribution" value="">
+        Penn Score:<input class="u-full-width" type="text" id="pennScore" placeholder="Quote Attribution" value="">
       </div>
       <div class="six columns">
-        <input class="u-full-width" type="text" id="quoteTitle" placeholder="Atribution Subtext" value="">
+        Opposing Team:<input class="u-full-width" type="text" id="opposingTeam" placeholder="Opposing Team" value="">
+        Opposing Team Score:<input class="u-full-width" type="text" id="opposingTeamScore" placeholder="Opposing Team Score" value="">
       </div>
     </div>
     <div class="row">
@@ -43,11 +43,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="four columns">
+      <!-- <div class="four columns">
         <h5>Formatting</h5>
         <input type="checkbox" id="centerElements">Center text</input>
-      </div>
-      <div class="four columns">
+      </div> -->
+      <div class="six columns">
         <h5>Style</h5>
         <select class="u-full-width publication" id="publicationSelect">
           <option value="dp">The Daily Pennsylvanian</option>
@@ -58,10 +58,9 @@
         <input type="checkbox" id="useWordmark">Use DP wordmark<br>
         <input type="checkbox" id="useSports">Use sports logo
       </div>
-      <div class="four columns">
+      <div class="six columns">
         <h5>Elements</h5>
-        <input type="checkbox" id="toggleAttribution" checked>Include attribution<br>
-        <input type="checkbox" id="toggleLogo" checked>Include logo<br>
+        <!-- <input type="checkbox" id="toggleLogo" checked>Include logo<br> -->
         <input type="checkbox" id="togglePicture">Include photo (must be square)<br>
         <button class="u-full-width button-secondary" type="button" id="uploadPicture">Upload photo &#8593;</button>
         <input type="file" accept=".png,.jpg,.jpeg" id="fileInput" hidden>

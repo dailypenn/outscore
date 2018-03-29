@@ -1,14 +1,16 @@
-var quote = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
 var name = "Amy Gutmann";
+var opposingTeamScore = 0;
+var pennScore = 0;
+var opposingTeam = "Insert Team";
 var title = "Penn President";
-var showAttribution = true;
+var showAttribution = false;
 var includeLogo = true;
-var centerElements = false;
 var inverseColors = false;
 var useWordmark = false;
-var useSports = false;
+var useSports = true;
 var includePhoto = false;
 var photoURL = "";
+var centerElements = true;
 
 // colors by publication
 const primary = ['#aa1e22', '#44bfbf', '#446cb3'];
@@ -58,15 +60,11 @@ var renderContent = function() {
     quoteCtx.fillStyle = "#ffffff";
   }
 
-  if (centerElements) {
-    quoteCtx.textAlign = "center";
-  }
-
   /* * * * * * * * * * * * * * * * * * * * *
   * RENDER CANVAS WITH PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
   if (includePhoto && photoURL != "") {
-    var attribY = wrapText(quoteCtx, "\“" + quote + "\”", centerElements ? 750 : 520,
+    var attribY = wrapText(quoteCtx, "\“Filler\”", 520,
       canvas.height / 2 - (showAttribution ? 100 : 70), 460, 48);
 
     // load logo
@@ -117,7 +115,7 @@ var renderContent = function() {
   } else {
     var quoteBottomSpacing = (showAttribution ? 0 : -20) + (includeLogo ? 50 : 120)
      + (!showAttribution && !includeLogo ? 40 : 0);
-    wrapText(quoteCtx, "\“" + quote + "\”", centerElements ? 500 : 50,
+    wrapText(quoteCtx, "\“Filler\”", 50,
       canvas.height / 2 - quoteBottomSpacing, 800, 48);
 
     // load logo
@@ -126,7 +124,8 @@ var renderContent = function() {
       image.onload = function() {
         var aspect = image.width / image.height;
         var width = 50 * aspect;
-        quoteCtx.drawImage(image, (centerElements ? (canvas.width - width) / 2 + 10 : canvas.width - width - 50), 50,
+        var centerWidth = canvas.width / 2;
+        quoteCtx.drawImage(image, centerWidth - (width / 2), 50,
           width, 50);
       }
     }
@@ -138,7 +137,7 @@ var renderContent = function() {
       var nameLength = nameCtx.measureText(name + " |").width;
       var titleLength = titleCtx.measureText(title).width;
 
-      var nameCtxX = centerElements ? (canvas.width / 2 - nameLength / 2 - titleLength / 2) : 50;
+      var nameCtxX = 50;
       var titleCtxX = nameLength + nameCtxX + 30;
 
       // NAME TEXT
@@ -184,18 +183,18 @@ window.setTimeout(function() {
   renderContent();
 }, 700);
 
-document.getElementById('quoteBox').oninput = function() {
-  quote = this.value;
+document.getElementById('pennScore').oninput = function() {
+  pennScore = this.value;
   renderContent();
 }
 
-document.getElementById('quoteAttr').oninput = function() {
-  name = this.value;
+document.getElementById('opposingTeamScore').oninput = function() {
+  opposingTeamScore = this.value;
   renderContent();
 }
 
-document.getElementById('quoteTitle').oninput = function() {
-  title = this.value;
+document.getElementById('opposingTeam').oninput = function() {
+  opposingTeam = this.value;
   renderContent();
 }
 
@@ -215,18 +214,18 @@ document.getElementById('saveButton').addEventListener('click', function() {
 // EVENT HANDLERS
 
 // Toggle Attribution
-var toggleAttrCheckbox = document.getElementById('toggleAttribution');
-toggleAttrCheckbox.addEventListener('click', function() {
-	showAttribution = !showAttribution;
-	renderContent();
-});
+// var toggleAttrCheckbox = document.getElementById('toggleAttribution');
+// toggleAttrCheckbox.addEventListener('click', function() {
+// 	showAttribution = !showAttribution;
+// 	renderContent();
+// });
 
-// Toggle Center Elements
-var toggleCenterCheckbox = document.getElementById('centerElements');
-toggleCenterCheckbox.addEventListener('click', function() {
-	centerElements = !centerElements;
-	renderContent();
-});
+// // Toggle Center Elements
+// var toggleCenterCheckbox = document.getElementById('centerElements');
+// toggleCenterCheckbox.addEventListener('click', function() {
+// 	centerElements = !centerElements;
+// 	renderContent();
+// });
 
 // Toggle Inverse Colors
 var toggleColorsCheckbox = document.getElementById('inverseColors');
@@ -288,8 +287,8 @@ fileInput.addEventListener('change', function() {
 });
 
 // Include logo
-var toggleLogoCheckbox = document.getElementById('toggleLogo');
-toggleLogoCheckbox.addEventListener('click', function() {
-  includeLogo = !includeLogo;
-  renderContent();
-});
+// var toggleLogoCheckbox = document.getElementById('toggleLogo');
+// toggleLogoCheckbox.addEventListener('click', function() {
+//   includeLogo = !includeLogo;
+//   renderContent();
+// });
