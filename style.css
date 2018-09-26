@@ -2,6 +2,10 @@ body {
   overflow-x: hidden;
 }
 
+canvas {
+  font-family: 'Oswald', sans-serif;
+}
+
 #canvas {
   transform-origin: 0 0;
   transform: scale(0.96);
