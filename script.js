@@ -1,5 +1,3 @@
-var name = "Amy Gutmann";
-var title = "Penn President";
 var includeLogo = true;
 var inverseColors = false;
 var useWordmark = false;
@@ -11,19 +9,13 @@ var teamOneName = "Team One";
 var teamTwoName = "Team Two";
 var teamOneScore = 0;
 var teamTwoScore = 0;
+var teamOneColor = '#ffffff';
+var teamTwoColor = '#ffffff';
 
 // colors by publication
-const primary = ['#aa1e22', '#44bfbf', '#456CB3'];
-const logo = ['logos/dp.svg', 'logos/street.svg', 'logos/utb.svg'];
-const inverse = ['logos/inverse-dp.svg', 'logos/inverse-street.svg', 'logos/inverse-utb.svg'];
-
-var drawLine = function(gameContext, width, height) {
-  gameContext.beginPath(); 
-  gameContext.moveTo(width / 2 + 10, 125);
-  gameContext.lineTo(width / 2 + 10, height - 50);
-  gameContext.strokeStyle = '#ffffff';
-  gameContext.stroke();
-}
+const primary = '#aa1e22';
+const logo = 'logos/dp.svg';
+const inverse = 'logos/inverse-dp.svg';
 
 var wrapText = function(context, text, x, y, maxWidth, lineHeight) {
   var words = text.split(' ');
@@ -50,12 +42,9 @@ var renderContent = function() {
   canvas.width = 1000;
   canvas.height = 500;
 
-  var pub = document.getElementById("publicationSelect").selectedIndex;
-
   // QUOTE TEXT + BG + IMG
   var gameContext = canvas.getContext("2d");
-  gameContext.fillStyle = primary[pub];
-
+  gameContext.fillStyle = primary;
   gameContext.fillRect(0, 0, canvas.width, canvas.height);
   if (inverseColors) {
     gameContext.fillStyle = "#ffffff";
@@ -64,7 +53,7 @@ var renderContent = function() {
 
   gameContext.font = "200 38px Oswald";
   if (inverseColors) {
-    gameContext.fillStyle = primary[pub];
+    gameContext.fillStyle = primary;
   } else {
     gameContext.fillStyle = "#ffffff";
   }
@@ -75,11 +64,6 @@ var renderContent = function() {
   * RENDER CANVAS WITH PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
   if (includePhoto && photoURL != "") {
-    drawLine(gameContext, canvas.width, canvas.height);
-    var teamOne = wrapText(gameContext, teamOneName.toUpperCase(), canvas.width / 4,
-      canvas.height / 2 - 150, 460, 48);
-    var teamTwo = wrapText(gameContext, teamTwoName.toUpperCase(), (3 * canvas.width) / 4,
-      canvas.height / 2 - 150, 460, 48);
     // load logo
     if (includeLogo) {
       var image = new Image();
@@ -95,14 +79,10 @@ var renderContent = function() {
       }
     }
 
-    var sizeOfPic = 200;
     // load photo
     var photo = new Image();
     photo.onload = function() {
-      gameContext.drawImage(photo, canvas.width / 4 - (sizeOfPic / 2), 
-        canvas.height / 2 - (sizeOfPic / 2), sizeOfPic, sizeOfPic);
-      gameContext.drawImage(photo, (3 * canvas.width) / 4 - (sizeOfPic / 2), 
-        canvas.height / 2 - (sizeOfPic / 2), sizeOfPic, sizeOfPic);
+      gameContext.drawImage(photo, 30, 30, 440, 440);
     }
     photo.src = photoURL;
 
@@ -110,14 +90,26 @@ var renderContent = function() {
   * RENDER CANVAS WITHOUT PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
   } else {
-    drawLine(gameContext, canvas.width, canvas.height);
     var quoteBottomSpacing = -20 + (includeLogo ? 50 : 120)
      + (!includeLogo ? 40 : 0);
-    wrapText(gameContext, teamOneName.toUpperCase(), centerElements ? 250 : 50,
-      canvas.height / 2 - quoteBottomSpacing, 800, 48);
 
-    wrapText(gameContext, teamTwoName.toUpperCase(), centerElements ? 750 : 50,
-      canvas.height / 2 - quoteBottomSpacing, 800, 48);
+     gameContext.fillStyle = teamOneColor;
+     wrapText(gameContext, teamOneName.toUpperCase(), centerElements ? 250 : 50,
+       canvas.height / 2 - quoteBottomSpacing, 800, 48);
+
+     gameContext.fillStyle = teamTwoColor;
+     wrapText(gameContext, teamTwoName.toUpperCase(), centerElements ? 750 : 50,
+       canvas.height / 2 - quoteBottomSpacing, 800, 48);
+
+     gameContext.fillStyle = teamOneColor;
+     gameContext.font = '200 144px Oswald';
+     gameContext.fillText(teamOneScore, centerElements ? 250 : 50,
+       canvas.height / 1.3);
+
+     gameContext.fillStyle = teamTwoColor;
+     gameContext.fillText(teamTwoScore, centerElements ? 750 : 50,
+       canvas.height / 1.3);
+
 
     // load logo
     if (includeLogo) {
@@ -146,9 +138,9 @@ var renderContent = function() {
     }
   } else {
     if (inverseColors) {
-      image.src = inverse[pub];
+      image.src = inverse;
     } else {
-      image.src = logo[pub];
+      image.src = logo;
     }
   }
 }
@@ -177,6 +169,20 @@ document.getElementById('teamTwoScore').oninput = function() {
   renderContent();
 }
 
+document.getElementById('teamOneColor').oninput = function() {
+  if (/^[0-9a-f]{3,6}$/.test(this.value)) {
+    teamOneColor = '#' + this.value;
+  }
+  renderContent();
+}
+
+document.getElementById('teamTwoColor').oninput = function() {
+  if (/^[0-9a-f]{3,6}$/.test(this.value)) {
+    teamTwoColor = '#' + this.value;
+  }
+  renderContent();
+}
+
 document.getElementById('saveButton').addEventListener('click', function() {
   var dataURL = canvas.toDataURL("image/png");
   var data = atob(dataURL.substring("data:image/png;base64,".length)),
@@ -200,10 +206,6 @@ toggleColorsCheckbox.addEventListener('click', function() {
   renderContent();
 });
 
-var publicationSelect = document.getElementById('publicationSelect');
-publicationSelect.addEventListener('change', function() {
-  renderContent();
-});
 // Toggle Wordmark
 var useWordmarkCheckbox = document.getElementById('useWordmark');
 useWordmarkCheckbox.addEventListener('click', function() {
@@ -219,7 +221,7 @@ useSportsCheckbox.addEventListener('click', function() {
 });
 
 // Include Photo
-var togglePictureCheckbox = document.getElementById('togglePennPicture');
+var togglePictureCheckbox = document.getElementById('togglePicture');
 togglePictureCheckbox.addEventListener('click', function() {
   includePhoto = !includePhoto;
   renderContent();

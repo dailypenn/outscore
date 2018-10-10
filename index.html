@@ -7,7 +7,7 @@
 
   <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2014-11-29/FileSaver.min.js"></script>
-
+  <script src="jscolor.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
@@ -44,43 +44,31 @@
       </div>
     </div>
     <div class="row">
+      <div class="six columns">
+        <input class="u-full-width" type="text" id="teamOneColor" placeholder="College Team 1 Color" value="">
+      </div>
+      <div class="six columns">
+        <input class="u-full-width" type="text" id="teamTwoColor" placeholder="College Team 2 Color" value="">
+      </div>
+    </div>
+    <div class="row">
       <div class="twelve columns">
         <h4>Options</h4>
       </div>
     </div>
     <div class="row">
-    	<div class="four columns">
+    	<div class="six columns">
         <h5>Elements</h5>
         <input type="checkbox" id="toggleLogo" checked>Include logo<br>
-        <input type="checkbox" id="togglePennPicture">Include team's photo (must be square)<br>
+        <input type="checkbox" id="togglePicture" checked>Include team's photo (must be square)<br>
         <button class="u-full-width button-secondary" type="button" id="uploadPicture">Upload Team's Photo &#8593;</button>
         <input type="file" accept=".png,.jpg,.jpeg" id="fileInput" hidden>
       </div>
-      <div class="four columns">
+      <div class="six columns">
         <h5>Style</h5>
-        <select class="u-full-width publication" id="publicationSelect">
-          <option value="dp">The Daily Pennsylvanian</option>
-          <option value="street">34th Street</option>
-          <option value="utb">Under the Button</option>
-        </select>
         <input type="checkbox" id="inverseColors">Use inverse colors<br>
         <input type="checkbox" id="useWordmark">Use DP wordmark<br>
         <input type="checkbox" id="useSports">Use sports logo
-      </div>
-      <div class="four columns">
-        <h5>Other Team</h5>
-        <select class="u-full-width publication" id="teamSelect">
-          <option value="brown">Brown University</option>
-          <option value="columbia">Columbia University</option>
-          <option value="cornell">Cornell University</option>
-          <option value="dartmouth">Dartmouth College</option>
-          <option value="harvard">Harvard University</option>
-          <option value="princeton">Princeton University</option>
-          <option value="yale">Yale University</option>
-          <option value="other">Other</option>
-        </select>
-        <input type="checkbox" id="toggleOtherTeamPicture">Include other team's photo (must be square)<br>
-        <button class="u-full-width button-secondary" type="button" id="uploadPicture2">Upload Team's Photo &#8593;</button>
       </div>
     </div>
     <div class="row">
