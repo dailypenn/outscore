@@ -49,14 +49,14 @@
       </div>
     </div>
     <div class="row">
-    	<div class="six columns">
+    	<div class="four columns">
         <h5>Elements</h5>
         <input type="checkbox" id="toggleLogo" checked>Include logo<br>
-        <input type="checkbox" id="togglePicture" checked>Include team's photo (must be square)<br>
+        <input type="checkbox" id="togglePennPicture">Include team's photo (must be square)<br>
         <button class="u-full-width button-secondary" type="button" id="uploadPicture">Upload Team's Photo &#8593;</button>
         <input type="file" accept=".png,.jpg,.jpeg" id="fileInput" hidden>
       </div>
-      <div class="six columns">
+      <div class="four columns">
         <h5>Style</h5>
         <select class="u-full-width publication" id="publicationSelect">
           <option value="dp">The Daily Pennsylvanian</option>
@@ -66,6 +66,21 @@
         <input type="checkbox" id="inverseColors">Use inverse colors<br>
         <input type="checkbox" id="useWordmark">Use DP wordmark<br>
         <input type="checkbox" id="useSports">Use sports logo
+      </div>
+      <div class="four columns">
+        <h5>Other Team</h5>
+        <select class="u-full-width publication" id="teamSelect">
+          <option value="brown">Brown University</option>
+          <option value="columbia">Columbia University</option>
+          <option value="cornell">Cornell University</option>
+          <option value="dartmouth">Dartmouth College</option>
+          <option value="harvard">Harvard University</option>
+          <option value="princeton">Princeton University</option>
+          <option value="yale">Yale University</option>
+          <option value="other">Other</option>
+        </select>
+        <input type="checkbox" id="toggleOtherTeamPicture">Include other team's photo (must be square)<br>
+        <button class="u-full-width button-secondary" type="button" id="uploadPicture2">Upload Team's Photo &#8593;</button>
       </div>
     </div>
     <div class="row">
