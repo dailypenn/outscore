@@ -29,7 +29,7 @@
     <h4>Content</h4>
     <div class="row">
       <div class="six columns">
-        <input class="u-full-width" type="text" id="teamOneName" placeholder="College Team 1" value="">
+        <input class="u-full-width" type="text" id="teamOneName" placeholder="College Team 1" value="" readonly="readonly">
       </div>
       <div class="six columns">
         <input class="u-full-width" type="text" id="teamTwoName" placeholder="College Team 2" value="">
@@ -45,7 +45,11 @@
     </div>
     <div class="row">
       <div class="six columns">
-        <input class="u-full-width" type="text" id="teamOneColor" placeholder="College Team 1 Color (Hex)" value="">
+        <select class="u-full-width" id="pennColorSelect">
+          <option value"" selected="selected">Penn Color</option>
+          <option value="pennRed">Red</option>
+          <option value="pennBlue">Blue</option>
+        </select>
       </div>
       <div class="six columns">
         <input class="u-full-width" type="text" id="teamTwoColor" placeholder="College Team 2 Color (Hex)" value="">
@@ -80,7 +84,7 @@
           <option value="harvard">Harvard University</option>
           <option value="princeton">Princeton University</option>
           <option value="yale">Yale University</option>
-          <option value="other">Other</option>
+          <option value="other" selected="selected">Other</option>
         </select>
         <input type="checkbox" id="toggleOtherTeamPicture">Include other team's photo (must be square)<br>
         <button class="u-full-width button-secondary" type="button" id="uploadPicture2">Upload Team's Photo &#8593;</button>
