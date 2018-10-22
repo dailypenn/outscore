@@ -1,3 +1,42 @@
+// colors by publication
+const primary = '#aa1e22';
+const logo = 'logos/dp.svg';
+const inverse = 'logos/inverse-dp.svg';
+// penns colors
+const pennBlue = '#00337F';
+const pennRed = '#A32638';
+// ivy data in alphabetical order (no penn)
+const ivies = {
+  brown: {
+    name: 'Brown',
+    color: '#654321'
+  },
+  columbia: {
+    name: 'Columbia',
+    color: '#9BCBEB'
+  },
+  cornell: {
+    name: 'Cornell',
+    color: '#B31B1B'
+  },
+  dartmouth: {
+    name: 'Dartmouth',
+    color: '#00693E'
+  },
+  harvard: {
+    name: 'Harvard',
+    color: '#C90016'
+  },
+  princeton: {
+    name: 'Princeton',
+    color: '#FF8F00'
+  },
+  yale: {
+    name: 'Yale',
+    color: '#0F4D92'
+  }
+}
+
 var includeLogo = true;
 var inverseColors = false;
 var useWordmark = false;
@@ -5,12 +44,13 @@ var useSports = false;
 var includePennPhoto = false;
 var includeOtherPhoto = false;
 var centerElements = true;
-var teamOneName = "PENN";
-var teamTwoName = "Team Two";
+var teamOneName = "Penn";
+var teamTwoName = "Other Team";
 var teamOneScore = 0;
 var teamTwoScore = 0;
-var teamOneColor = '#ffffff';
-var teamTwoColor = '#ffffff';
+var pennColor = pennBlue;
+var teamTwoColor = "#FFFFFF"
+var  otherTeam = true;
 
 // colors by publication
 const primary = '#aa1e22';
@@ -19,6 +59,8 @@ const inverse = 'logos/inverse-dp.svg';
 const pennPic = 'ivies/penn.png';
 
 var renderContent = function() {
+  document.getElementById('teamTwoName').disabled = !otherTeam;
+  document.getElementById('teamTwoColor').disabled = !otherTeam;
   var canvas = document.getElementById("canvas");
   canvas.width = 1000;
   canvas.height = 500;
@@ -45,7 +87,6 @@ var renderContent = function() {
   * RENDER CANVAS WITH SECOND PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
   if (includeOtherPhoto) {
-    // drawLine(gameContext, canvas.width, canvas.height);
     var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
     gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
 
@@ -77,14 +118,15 @@ var renderContent = function() {
   * RENDER CANVAS WITHOUT PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
   } else {
-    // gameContext.fillStyle = teamOneColor;
     var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
     gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
 
     gameContext.font = '200 50px Oswald';
+    gameContext.fillStyle = pennColor;
     gameContext.fillText(teamOneScore, centerElements ? 250 : 50,
       canvas.height - 50);
 
+    gameContext.fillStyle = teamTwoColor;
     gameContext.fillText(teamTwoScore, centerElements ? 750 : 50,
       canvas.height - 50);
 
@@ -155,12 +197,10 @@ document.getElementById('teamTwoScore').oninput = function() {
   renderContent();
 }
 
-document.getElementById('teamOneColor').oninput = function() {
-  if (/^[0-9a-f]{3,6}$/.test(this.value)) {
-    teamOneColor = '#' + this.value;
-  }
+document.getElementById("pennColorSelect").addEventListener("change", function() {
+  pennColor = this.value === 'pennBlue' ? pennBlue : pennRed;
   renderContent();
-}
+});
 
 document.getElementById('teamTwoColor').oninput = function() {
   if (/^[0-9a-f]{3,6}$/.test(this.value)) {
@@ -184,6 +224,16 @@ document.getElementById('saveButton').addEventListener('click', function() {
 });
 
 // EVENT HANDLERS
+
+// Choose other team
+document.getElementById("teamSelect").addEventListener("change", function() {
+  document.getElementById("teamTwoName").value = teamTwoName = ivies[this.value].name;
+  document.getElementById("teamTwoColor").value = teamTwoColor = ivies[this.value].color;
+  otherTeam = this.value === 'other';
+  renderContent();
+});
+
+document.getElementById("teamOneName").value = "Penn";
 
 // Toggle Inverse Colors
 var toggleColorsCheckbox = document.getElementById('inverseColors');
