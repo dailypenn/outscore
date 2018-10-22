@@ -2,6 +2,7 @@
 const primary = '#aa1e22';
 const logo = 'logos/dp.svg';
 const inverse = 'logos/inverse-dp.svg';
+const pennPic = 'ivies/penn.png';
 // penns colors
 const pennBlue = '#00337F';
 const pennRed = '#A32638';
@@ -51,12 +52,6 @@ var teamTwoScore = 0;
 var pennColor = pennBlue;
 var teamTwoColor = "#FFFFFF"
 var  otherTeam = true;
-
-// colors by publication
-const primary = '#aa1e22';
-const logo = 'logos/dp.svg';
-const inverse = 'logos/inverse-dp.svg';
-const pennPic = 'ivies/penn.png';
 
 var renderContent = function() {
   document.getElementById('teamTwoName').disabled = !otherTeam;
