@@ -1,3 +1,42 @@
+// colors by publication
+const primary = '#aa1e22';
+const logo = 'logos/dp.svg';
+const inverse = 'logos/inverse-dp.svg';
+// penns colors
+const pennBlue = '#00337F';
+const pennRed = '#A32638';
+// ivy data in alphabetical order (no penn)
+const ivies = {
+  brown: {
+    name: 'Brown',
+    color: '#654321'
+  },
+  columbia: {
+    name: 'Columbia',
+    color: '#9BCBEB'
+  },
+  cornell: {
+    name: 'Cornell',
+    color: '#B31B1B'
+  },
+  dartmouth: {
+    name: 'Dartmouth',
+    color: '#00693E'
+  },
+  harvard: {
+    name: 'Harvard',
+    color: '#C90016'
+  },
+  princeton: {
+    name: 'Princeton',
+    color: '#FF8F00'
+  },
+  yale: {
+    name: 'Yale',
+    color: '#0F4D92'
+  }
+}
+
 var includeLogo = true;
 var inverseColors = false;
 var useWordmark = false;
@@ -9,22 +48,11 @@ var teamOneName = "Penn";
 var teamTwoName = "Other Team";
 var teamOneScore = 0;
 var teamTwoScore = 0;
-var pennColor = "#00337F";
+var pennColor = pennBlue;
 var teamTwoColor = "#FFFFFF"
-var otherTeam = true;
+var  otherTeam = true;
 
-// colors by publication
-const primary = '#aa1e22';
-const logo = 'logos/dp.svg';
-const inverse = 'logos/inverse-dp.svg';
-// penns colors
-const pennBlue = '#00337F';
-const pennRed = '#A32638';
-// ivy data in alphabetical order (no penn)
-const ivyColors = ["#654321", "#9BCBEB", "#B31B1B", "#00693E", "#C90016",
-                   "#FF8F00", "#0F4D92"];
-const ivyNames = ["Brown", "Columbia", "Cornell", "Dartmouth", "Harvard",
-                  "Princeton", "Yale"];
+
 
 var drawLine = function(gameContext, width, height) {
   gameContext.beginPath();
@@ -177,7 +205,6 @@ window.setTimeout(function() {
   renderContent();
 }, 700);
 
-// 'teamOneName' is readonly!!!
 document.getElementById('teamOneName').oninput = function() {
   teamOneName = this.value;
   renderContent();
@@ -198,13 +225,8 @@ document.getElementById('teamTwoScore').oninput = function() {
   renderContent();
 }
 
-var pennColorSelect = document.getElementById("pennColorSelect");
-pennColorSelect.addEventListener("change", function() {
-  if (pennColorSelect.value === "pennBlue") {
-    pennColor = pennBlue;
-  } else if (pennColorSelect.value === "pennRed"){
-    pennColor = pennRed;
-  }
+document.getElementById("pennColorSelect").addEventListener("change", function() {
+  pennColor = this.value === 'pennBlue' ? pennBlue : pennRed;
   renderContent();
 });
 
@@ -232,41 +254,10 @@ document.getElementById('saveButton').addEventListener('click', function() {
 // EVENT HANDLERS
 
 // Choose other team
-var teamSelect = document.getElementById("teamSelect");
-teamSelect.addEventListener("change", function() {
-  if (teamSelect.value === "brown") {
-    teamTwoColor = ivyColors[0];
-    teamTwoName = ivyNames[0];
-    otherTeam = false;
-  } else if (teamSelect.value === "columbia") {
-    teamTwoColor = ivyColors[1];
-    teamTwoName = ivyNames[1];
-    otherTeam = false;
-  } else if (teamSelect.value === "cornell") {
-    teamTwoColor = ivyColors[2];
-    teamTwoName = ivyNames[2];
-    otherTeam = false;
-  } else if (teamSelect.value === "dartmouth") {
-    teamTwoColor = ivyColors[3];
-    teamTwoName = ivyNames[3];
-    otherTeam = false;
-  } else if (teamSelect.value === "harvard") {
-    teamTwoColor = ivyColors[4];
-    teamTwoName = ivyNames[4];
-    otherTeam = false;
-  } else if (teamSelect.value === "princeton") {
-    teamTwoColor = ivyColors[5];
-    teamTwoName = ivyNames[5];
-    otherTeam = false;
-  } else if (teamSelect.value === "yale") {
-    teamTwoColor = ivyColors[6];
-    teamTwoName = ivyNames[6];
-    otherTeam = false;
-  } else if (teamSelect.value === "other") {
-    otherTeam = true;
-  }
-  document.getElementById("teamTwoName").value = teamTwoName;
-  document.getElementById("teamTwoColor").value = teamTwoColor;
+document.getElementById("teamSelect").addEventListener("change", function() {
+  document.getElementById("teamTwoName").value = teamTwoName = ivies[this.value].name;
+  document.getElementById("teamTwoColor").value = teamTwoColor = ivies[this.value].color;
+  otherTeam = this.value === 'other';
   renderContent();
 });
 
