@@ -41,8 +41,8 @@ var includeLogo = true;
 var inverseColors = false;
 var useWordmark = false;
 var useSports = false;
-var includePhoto = false;
-var photoURL = "";
+var includePennPhoto = false;
+var includeOtherPhoto = false;
 var centerElements = true;
 var teamOneName = "Penn";
 var teamTwoName = "Other Team";
@@ -52,35 +52,11 @@ var pennColor = pennBlue;
 var teamTwoColor = "#FFFFFF"
 var  otherTeam = true;
 
-
-
-var drawLine = function(gameContext, width, height) {
-  gameContext.beginPath();
-  gameContext.moveTo(width / 2 + 10, 125);
-  gameContext.lineTo(width / 2 + 10, height - 50);
-  gameContext.strokeStyle = '#ffffff';
-  gameContext.stroke();
-}
-
-var wrapText = function(context, text, x, y, maxWidth, lineHeight) {
-  var words = text.split(' ');
-  var line = '';
-
-  for (var n = 0; n < words.length; n++) {
-    var testLine = line + words[n] + ' ';
-    var metrics = context.measureText(testLine);
-    var testWidth = metrics.width;
-    if (testWidth > maxWidth && n > 0) {
-      context.fillText(line, x, y);
-      line = words[n] + ' ';
-      y += lineHeight;
-    } else {
-      line = testLine;
-    }
-  }
-  context.fillText(line, x, y);
-  return y;
-}
+// colors by publication
+const primary = '#aa1e22';
+const logo = 'logos/dp.svg';
+const inverse = 'logos/inverse-dp.svg';
+const pennPic = 'ivies/penn.png';
 
 var renderContent = function() {
   document.getElementById('teamTwoName').disabled = !otherTeam;
@@ -108,14 +84,12 @@ var renderContent = function() {
   gameContext.textAlign = "center";
 
   /* * * * * * * * * * * * * * * * * * * * *
-  * RENDER CANVAS WITH PHOTO
+  * RENDER CANVAS WITH SECOND PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
-  if (includePhoto && photoURL != "") {
-    drawLine(gameContext, canvas.width, canvas.height);
-    var teamOne = wrapText(gameContext, teamOneName.toUpperCase(), canvas.width / 4,
-      canvas.height / 2 - 150, 460, 48);
-    var teamTwo = wrapText(gameContext, teamTwoName.toUpperCase(), (3 * canvas.width) / 4,
-      canvas.height / 2 - 150, 460, 48);
+  if (includeOtherPhoto) {
+    var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
+    gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
+
     // load logo
     if (includeLogo) {
       var image = new Image();
@@ -123,49 +97,47 @@ var renderContent = function() {
         var aspect = image.width / image.height;
         if (useWordmark) {
           var width = 40 * aspect;
-          gameContext.drawImage(image, canvas.width - width - 40, 40, width, 40);
+          gameContext.drawImage(image, (canvas.width - width) / 2, 40, width, 40);
         } else {
           var width = 50 * aspect;
-          gameContext.drawImage(image, canvas.width - width - 40, 40, width, 50);
+          gameContext.drawImage(image, (canvas.width - width) / 2, 40, width, 50);
         }
       }
     }
 
-    var sizeOfPic = 200;
+    var sizeOfPic = 150;
     // load photo
-    var photo = new Image();
-    photo.onload = function() {
-      gameContext.drawImage(photo, canvas.width / 4 - (sizeOfPic / 2),
-        canvas.height / 2 - (sizeOfPic / 2), sizeOfPic, sizeOfPic);
-      gameContext.drawImage(photo, (3 * canvas.width) / 4 - (sizeOfPic / 2),
-        canvas.height / 2 - (sizeOfPic / 2), sizeOfPic, sizeOfPic);
+    var pennPhoto = new Image();
+    pennPhoto.onload = function() {
+      gameContext.drawImage(pennPhoto, canvas.width / 4 - (sizeOfPic / 2),
+        canvas.height / 2 - (sizeOfPic / 2) + 25, sizeOfPic, sizeOfPic);
     }
-    photo.src = photoURL;
+    pennPhoto.src = pennPic;
 
   /* * * * * * * * * * * * * * * * * * * * *
   * RENDER CANVAS WITHOUT PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
   } else {
-    drawLine(gameContext, canvas.width, canvas.height);
-    var quoteBottomSpacing = -20 + (includeLogo ? 50 : 120)
-     + (!includeLogo ? 40 : 0);
+    var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
+    gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
 
+    gameContext.font = '200 50px Oswald';
     gameContext.fillStyle = pennColor;
-    wrapText(gameContext, teamOneName.toUpperCase(), centerElements ? 250 : 50,
-      canvas.height / 2 - quoteBottomSpacing, 800, 48);
-
-    gameContext.fillStyle = teamTwoColor;
-    wrapText(gameContext, teamTwoName.toUpperCase(), centerElements ? 750 : 50,
-      canvas.height / 2 - quoteBottomSpacing, 800, 48);
-
-    gameContext.fillStyle = pennColor;
-    gameContext.font = '200 144px Oswald';
     gameContext.fillText(teamOneScore, centerElements ? 250 : 50,
-      canvas.height / 1.3);
+      canvas.height - 50);
 
     gameContext.fillStyle = teamTwoColor;
     gameContext.fillText(teamTwoScore, centerElements ? 750 : 50,
-      canvas.height / 1.3);
+      canvas.height - 50);
+
+    var sizeOfPic = 150;
+    // load photo
+    var pennPhoto = new Image();
+    pennPhoto.onload = function() {
+      gameContext.drawImage(pennPhoto, canvas.width / 4 - (sizeOfPic / 2),
+        canvas.height / 2 - (sizeOfPic / 2) + 25, sizeOfPic, sizeOfPic);
+    }
+    pennPhoto.src = pennPic;
 
     // load logo
     if (includeLogo) {
@@ -173,7 +145,7 @@ var renderContent = function() {
       image.onload = function() {
         var aspect = image.width / image.height;
         var width = 50 * aspect;
-        gameContext.drawImage(image, (centerElements ? (canvas.width - width) / 2 + 10 : canvas.width - width - 50), 50,
+        gameContext.drawImage(image, (canvas.width - width) / 2, 50,
           width, 50);
       }
     }
@@ -287,20 +259,14 @@ useSportsCheckbox.addEventListener('click', function() {
 // Include Photo
 var togglePictureCheckbox = document.getElementById('togglePennPicture');
 togglePictureCheckbox.addEventListener('click', function() {
-  includePhoto = !includePhoto;
+  includePennPhoto = !includePennPhoto;
   renderContent();
 });
 
-// Upload Picture
-var uploadPicture = document.getElementById('uploadPicture');
-var fileInput = document.getElementById('fileInput');
-uploadPicture.addEventListener('click', function() {
-  fileInput.click();
-});
-fileInput.addEventListener('change', function() {
-  if (this.files && this.files[0]) {
-    photoURL = URL.createObjectURL(this.files[0]);
-  }
+// Include Other Team Photo
+var togglePictureCheckbox = document.getElementById('toggleOtherTeamPicture');
+togglePictureCheckbox.addEventListener('click', function() {
+  includeOtherPhoto = !includeOtherPhoto;
   renderContent();
 });
 
