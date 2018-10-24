@@ -3,6 +3,7 @@ const primary = '#aa1e22';
 const logo = 'logos/dp.svg';
 const inverse = 'logos/inverse-dp.svg';
 const pennPic = 'ivies/penn.png';
+
 // penns colors
 const pennBlue = '#00337F';
 const pennRed = '#A32638';
@@ -10,31 +11,38 @@ const pennRed = '#A32638';
 const ivies = {
   brown: {
     name: 'Brown',
-    color: '#654321'
+    color: '#654321',
+    image: 'ivies/brown.png'
   },
   columbia: {
     name: 'Columbia',
-    color: '#9BCBEB'
+    color: '#9BCBEB',
+    image: 'ivies/columbia.png'
   },
   cornell: {
     name: 'Cornell',
-    color: '#B31B1B'
+    color: '#B31B1B',
+    image: 'ivies/cornell.png'
   },
   dartmouth: {
     name: 'Dartmouth',
-    color: '#00693E'
+    color: '#00693E',
+    image: 'ivies/dartmouth.png'
   },
   harvard: {
     name: 'Harvard',
-    color: '#C90016'
+    color: '#C90016',
+    image: 'ivies/harvard.png'
   },
   princeton: {
     name: 'Princeton',
-    color: '#FF8F00'
+    color: '#FF8F00',
+    image: 'ivies/princeton.png'
   },
   yale: {
     name: 'Yale',
-    color: '#0F4D92'
+    color: '#0F4D92',
+    image: 'ivies/yale.png'
   }
 }
 
@@ -50,12 +58,20 @@ var teamTwoName = "Other Team";
 var teamOneScore = 0;
 var teamTwoScore = 0;
 var pennColor = pennBlue;
-var teamTwoColor = "#FFFFFF"
-var  otherTeam = true;
+var teamTwoColor = "#FFFFFF";
+var otherTeam = true;
+var otherPhotoURL = "";
 
 var renderContent = function() {
+  console.log("other team val: " + otherTeam);
+  if(document.getElementById('teamSelect').selectedIndex == 7) {
+    otherTeam = true;
+  }
   document.getElementById('teamTwoName').disabled = !otherTeam;
   document.getElementById('teamTwoColor').disabled = !otherTeam;
+
+  var selectedTeamIndex = document.getElementById('teamSelect');
+  var selectedTeam = selectedTeamIndex.options[selectedTeamIndex.selectedIndex].text.toLowerCase();
   var canvas = document.getElementById("canvas");
   canvas.width = 1000;
   canvas.height = 500;
@@ -85,6 +101,15 @@ var renderContent = function() {
     var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
     gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
 
+    gameContext.font = '200 50px Oswald';
+    gameContext.fillStyle = pennColor;
+    gameContext.fillText(teamOneScore, centerElements ? 250 : 50,
+      canvas.height - 50);
+
+    gameContext.fillStyle = teamTwoColor;
+    gameContext.fillText(teamTwoScore, centerElements ? 750 : 50,
+      canvas.height - 50);
+
     // load logo
     if (includeLogo) {
       var image = new Image();
@@ -109,6 +134,17 @@ var renderContent = function() {
     }
     pennPhoto.src = pennPic;
 
+    var otherTeamPhoto = new Image();
+    otherTeamPhoto.onload = function() {
+      gameContext.drawImage(otherTeamPhoto, (3 * canvas.width) / 4 - (sizeOfPic / 2),
+        canvas.height / 2 - (sizeOfPic / 2) + 25, sizeOfPic, sizeOfPic);
+    }
+    if(selectedTeam.split(' ')[0] == 'other') {
+      otherTeamPhoto.src = otherPhotoURL;
+    } else {
+      otherTeamPhoto.src = ivies[selectedTeam.split(' ')[0]].image;
+    }
+    
   /* * * * * * * * * * * * * * * * * * * * *
   * RENDER CANVAS WITHOUT PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
@@ -262,6 +298,7 @@ togglePictureCheckbox.addEventListener('click', function() {
 var togglePictureCheckbox = document.getElementById('toggleOtherTeamPicture');
 togglePictureCheckbox.addEventListener('click', function() {
   includeOtherPhoto = !includeOtherPhoto;
+  otherTeam = !otherTeam;
   renderContent();
 });
 
@@ -269,5 +306,18 @@ togglePictureCheckbox.addEventListener('click', function() {
 var toggleLogoCheckbox = document.getElementById('toggleLogo');
 toggleLogoCheckbox.addEventListener('click', function() {
   includeLogo = !includeLogo;
+  renderContent();
+});
+
+// Upload "Other" picture
+var uploadPicture = document.getElementById('uploadPicture');
+var fileInput = document.getElementById('fileInput');
+uploadPicture.addEventListener('click', function() {
+  fileInput.click();
+});
+fileInput.addEventListener('change', function() {
+  if (this.files && this.files[0]) {
+    otherPhotoURL = URL.createObjectURL(this.files[0]);
+  }
   renderContent();
 });
