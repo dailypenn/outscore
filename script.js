@@ -85,7 +85,7 @@ var renderContent = function() {
     gameContext.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
   }
 
-  gameContext.font = "200 38px Oswald";
+  gameContext.font = "400 38px Oswald";
   if (inverseColors) {
     gameContext.fillStyle = primary;
   } else {
@@ -101,7 +101,7 @@ var renderContent = function() {
     var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
     gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
 
-    gameContext.font = '200 50px Oswald';
+    gameContext.font = '400 50px Oswald';
     gameContext.fillStyle = pennColor;
     gameContext.fillText(teamOneScore, centerElements ? 250 : 50,
       canvas.height - 50);
@@ -144,7 +144,7 @@ var renderContent = function() {
     } else {
       otherTeamPhoto.src = ivies[selectedTeam.split(' ')[0]].image;
     }
-    
+
   /* * * * * * * * * * * * * * * * * * * * *
   * RENDER CANVAS WITHOUT PHOTO
   * * * * * * * * * * * * * * *  * * * * * */
@@ -152,7 +152,7 @@ var renderContent = function() {
     var combinedNames = teamOneName.toUpperCase() + " VS. " + teamTwoName.toUpperCase();
     gameContext.fillText(combinedNames, canvas.width / 2, canvas.height / 3.1);
 
-    gameContext.font = '200 50px Oswald';
+    gameContext.font = '400 50px Oswald';
     gameContext.fillStyle = pennColor;
     gameContext.fillText(teamOneScore, centerElements ? 250 : 50,
       canvas.height - 50);
