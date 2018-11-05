@@ -236,14 +236,14 @@ document.getElementById("pennColorSelect").addEventListener("change", function()
 
 document.getElementById('teamTwoColor').oninput = function() {
   if (/^[0-9a-f]{3,6}$/.test(this.value)) {
-    teamTwoColor = '#' + this.value;
+    teamTwoColor = `#${this.value}`;
   }
   renderContent();
 }
 
 document.getElementById('backgroundColor').oninput = function() {
   if (/^[0-9a-f]{3,6}$/.test(this.value)) {
-    backgroundColor = '#' + this.value;
+    backgroundColor = `#${this.value}`;
   }
   renderContent();
 }
