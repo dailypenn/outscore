@@ -61,6 +61,7 @@ var pennColor = pennBlue;
 var teamTwoColor = "#FFFFFF";
 var otherTeam = true;
 var otherPhotoURL = "";
+var backgroundColor = primary;
 
 var renderContent = function() {
   console.log("other team val: " + otherTeam);
@@ -78,7 +79,7 @@ var renderContent = function() {
 
   // QUOTE TEXT + BG + IMG
   var gameContext = canvas.getContext("2d");
-  gameContext.fillStyle = primary;
+  gameContext.fillStyle = backgroundColor;
   gameContext.fillRect(0, 0, canvas.width, canvas.height);
   if (inverseColors) {
     gameContext.fillStyle = "#ffffff";
@@ -236,6 +237,13 @@ document.getElementById("pennColorSelect").addEventListener("change", function()
 document.getElementById('teamTwoColor').oninput = function() {
   if (/^[0-9a-f]{3,6}$/.test(this.value)) {
     teamTwoColor = '#' + this.value;
+  }
+  renderContent();
+}
+
+document.getElementById('backgroundColor').oninput = function() {
+  if (/^[0-9a-f]{3,6}$/.test(this.value)) {
+    backgroundColor = '#' + this.value;
   }
   renderContent();
 }
