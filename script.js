@@ -1,5 +1,7 @@
 // colors by publication
-const primary = '#aa1e22';
+const primary = 'rgba(170, 30, 34, 0.5)';
+const primaryTwo = 'rgba(170, 30, 34, 1)';
+
 const logo = 'logos/dp.svg';
 const inverse = 'logos/inverse-dp.svg';
 const pennPic = 'ivies/penn.png';
@@ -47,6 +49,7 @@ const ivies = {
 }
 
 var includeLogo = true;
+var includeBGPhoto = true;
 var inverseColors = false;
 var useWordmark = false;
 var useSports = false;
@@ -63,8 +66,21 @@ var otherTeam = true;
 var otherPhotoURL = "";
 var backgroundColor = primary;
 
+var canvas = document.getElementById("canvas");
+var gameContext = canvas.getContext("2d");
+
+canvas.width = 1000;
+canvas.height = 500;
+
+var backgroundImage = new Image();
+backgroundImage.src = "palestra.jpg";
+backgroundImage.onload = function() {
+  gameContext.save();
+  gameContext.drawImage(backgroundImage, 0, 0);
+  gameContext.restore();
+}
+
 var renderContent = function() {
-  console.log("other team val: " + otherTeam);
   if(document.getElementById('teamSelect').selectedIndex == 7) {
     otherTeam = true;
   }
@@ -73,25 +89,27 @@ var renderContent = function() {
 
   var selectedTeamIndex = document.getElementById('teamSelect');
   var selectedTeam = selectedTeamIndex.options[selectedTeamIndex.selectedIndex].text.toLowerCase();
-  var canvas = document.getElementById("canvas");
-  canvas.width = 1000;
-  canvas.height = 500;
+  // var canvas = document.getElementById("canvas");
+  // canvas.width = 1000;
+  // canvas.height = 500;
 
-  // QUOTE TEXT + BG + IMG
-  var gameContext = canvas.getContext("2d");
+  // // QUOTE TEXT + BG + IMG
+  // var gameContext = canvas.getContext("2d");
+  
   gameContext.fillStyle = backgroundColor;
   gameContext.fillRect(0, 0, canvas.width, canvas.height);
   if (inverseColors) {
-    gameContext.fillStyle = "#ffffff";
+    gameContext.fillStyle = 'rgba(255, 255, 255, 0.5)';
     gameContext.fillRect(10, 10, canvas.width - 20, canvas.height - 20);
   }
 
   gameContext.font = "400 38px Oswald";
   if (inverseColors) {
-    gameContext.fillStyle = primary;
+    gameContext.fillStyle = primaryTwo;
   } else {
-    gameContext.fillStyle = "#ffffff";
+    gameContext.fillStyle = 'rgba(255, 255, 255, 1)';
   }
+
 
   gameContext.textAlign = "center";
 
@@ -303,10 +321,17 @@ togglePictureCheckbox.addEventListener('click', function() {
 });
 
 // Include Other Team Photo
-var togglePictureCheckbox = document.getElementById('toggleOtherTeamPicture');
-togglePictureCheckbox.addEventListener('click', function() {
+var toggleOtherPictureCheckbox = document.getElementById('toggleOtherTeamPicture');
+toggleOtherPictureCheckbox.addEventListener('click', function() {
   includeOtherPhoto = !includeOtherPhoto;
   otherTeam = !otherTeam;
+  renderContent();
+});
+
+// Include Background Photo
+var toggleBackgroundPhotoCheckbox = document.getElementById('toggleBackgroundPhoto');
+toggleBackgroundPhotoCheckbox.addEventListener('click', function() {
+  includeBGPhoto = !includeBGPhoto;
   renderContent();
 });
 
