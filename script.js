@@ -49,7 +49,7 @@ const ivies = {
 }
 
 var includeLogo = true;
-var includeBGPhoto = true;
+var includeBGPhoto = false;
 var inverseColors = false;
 var useWordmark = false;
 var useSports = false;
@@ -72,15 +72,23 @@ var gameContext = canvas.getContext("2d");
 canvas.width = 1000;
 canvas.height = 500;
 
-var backgroundImage = new Image();
-backgroundImage.src = "palestra.jpg";
-backgroundImage.onload = function() {
-  gameContext.save();
-  gameContext.drawImage(backgroundImage, 0, 0);
-  gameContext.restore();
+function drawBackgroundImage() {
+  var backgroundImage = new Image();
+  backgroundImage.src = "palestra.jpg";
+  backgroundImage.onload = function() {
+    gameContext.drawImage(backgroundImage, 0, 0);
+    gameContext.restore();
+  }
 }
 
-var renderContent = function() {
+function renderContent() {
+  // save the state and then clear the canvas
+  gameContext.save();
+  gameContext.clearRect(0, 0, canvas.width, canvas.height);
+  if (includeBGPhoto) {
+    drawBackgroundImage();
+  }
+
   if(document.getElementById('teamSelect').selectedIndex == 7) {
     otherTeam = true;
   }
@@ -89,14 +97,9 @@ var renderContent = function() {
 
   var selectedTeamIndex = document.getElementById('teamSelect');
   var selectedTeam = selectedTeamIndex.options[selectedTeamIndex.selectedIndex].text.toLowerCase();
-  // var canvas = document.getElementById("canvas");
-  // canvas.width = 1000;
-  // canvas.height = 500;
 
-  // // QUOTE TEXT + BG + IMG
-  // var gameContext = canvas.getContext("2d");
-  
   gameContext.fillStyle = backgroundColor;
+  console.log(backgroundColor);
   gameContext.fillRect(0, 0, canvas.width, canvas.height);
   if (inverseColors) {
     gameContext.fillStyle = 'rgba(255, 255, 255, 0.5)';
@@ -253,15 +256,15 @@ document.getElementById("pennColorSelect").addEventListener("change", function()
 });
 
 document.getElementById('teamTwoColor').oninput = function() {
-  if (/^[0-9a-f]{3,6}$/.test(this.value)) {
-    teamTwoColor = `#${this.value}`;
+  if (/[0-9a-fA-F]{3,6}$/.test(this.value)) {
+    teamTwoColor = this.value.includes('#') ? this.value : `#${this.value}`;
   }
   renderContent();
 }
 
 document.getElementById('backgroundColor').oninput = function() {
-  if (/^[0-9a-f]{3,6}$/.test(this.value)) {
-    backgroundColor = `#${this.value}`;
+  if (/[0-9a-fA-F]{3,6}$/.test(this.value)) {
+    backgroundColor = this.value.includes('#') ? this.value : `#${this.value}`;
   }
   renderContent();
 }
@@ -344,7 +347,7 @@ toggleLogoCheckbox.addEventListener('click', function() {
 
 // Upload "Other" picture
 var uploadPicture = document.getElementById('uploadPicture');
-var fileInput = document.getElementById('fileInput');
+var fileInput = document.getElementById('uploadBackgroundPicture');
 uploadPicture.addEventListener('click', function() {
   fileInput.click();
 });
